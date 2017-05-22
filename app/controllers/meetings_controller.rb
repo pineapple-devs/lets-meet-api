@@ -2,19 +2,19 @@ class MeetingsController < ApplicationController
   before_action :set_user
   before_action :set_meeting, only: [:show, :update, :destroy]
 
-  # GET /meetings
+  # GET users/1/meetings
   def index
     @meetings = @user.meetings
 
     render json: @meetings
   end
 
-  # GET /meetings/1
+  # GET users/1/meetings/1
   def show
     render json: @meeting
   end
 
-  # POST /meetings
+  # POST users/1/meetings
   def create
     @meeting = @user.meetings.build(meeting_params)
 
@@ -25,7 +25,7 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /meetings/1
+  # PATCH/PUT users/1/meetings/1
   def update
     if @meeting.update(meeting_params)
       render json: @meeting
@@ -34,7 +34,7 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # DELETE /meetings/1
+  # DELETE users/1/meetings/1
   def destroy
     @meeting.destroy
   end
