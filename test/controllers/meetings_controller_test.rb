@@ -6,31 +6,31 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get meetings_url, as: :json
+    get user_meetings_url(@meeting.user_id), as: :json
     assert_response :success
   end
 
   test "should create meeting" do
     assert_difference('Meeting.count') do
-      post meetings_url, params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
+      post user_meetings_url(@meeting.user_id), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
     end
 
     assert_response 201
   end
 
   test "should show meeting" do
-    get meeting_url(@meeting), as: :json
+    get user_meeting_url(@meeting.user_id, @meeting), as: :json
     assert_response :success
   end
 
   test "should update meeting" do
-    patch meeting_url(@meeting), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
+    patch user_meeting_url(@meeting.user_id, @meeting), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
     assert_response 200
   end
 
   test "should destroy meeting" do
     assert_difference('Meeting.count', -1) do
-      delete meeting_url(@meeting), as: :json
+      delete user_meeting_url(@meeting.user_id, @meeting), as: :json
     end
 
     assert_response 204

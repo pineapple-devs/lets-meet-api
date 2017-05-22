@@ -1,9 +1,10 @@
 class MeetingsController < ApplicationController
+  before_action :set_user
   before_action :set_meeting, only: [:show, :update, :destroy]
 
   # GET /meetings
   def index
-    @meetings = Meeting.all
+    @meetings = @user.meetings
 
     render json: @meetings
   end
@@ -15,10 +16,10 @@ class MeetingsController < ApplicationController
 
   # POST /meetings
   def create
-    @meeting = Meeting.new(meeting_params)
+    @meeting = @user.meetings.build(meeting_params)
 
     if @meeting.save
-      render json: @meeting, status: :created, location: @meeting
+      render json: @meeting, status: :created, location: user_meeting_url(@user, @meeting)
     else
       render json: @meeting.errors, status: :unprocessable_entity
     end
@@ -39,9 +40,12 @@ class MeetingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:user_id])
+    end
+
     def set_meeting
-      @meeting = Meeting.find(params[:id])
+      @meeting = @user.meetings.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
