@@ -7,12 +7,12 @@ class IntervalsController < ApplicationController
   def index
     @intervals = @meeting.intervals
 
-    render json: @intervals
+    render json: @intervals, :include => { :meeting => { :only => [:title, :description] } }
   end
 
   # GET users/1/meetings/1/intervals/1
   def show
-    render json: @interval
+    render json: @interval, :include => { :meeting => { :only => [:title, :description] } }
   end
 
   # POST users/1/meetings/1/intervals
@@ -21,6 +21,7 @@ class IntervalsController < ApplicationController
 
     if @interval.save
       render json: @interval,
+             include: { meeting: { only: [:title, :description] } },
              status: :created,
              location: user_meeting_interval_url(@user, @meeting, @interval)
     else
@@ -31,7 +32,7 @@ class IntervalsController < ApplicationController
   # PATCH/PUT users/1/meetings/1/intervals/1
   def update
     if @interval.update(interval_params)
-      render json: @interval
+      render json: @interval, :include => { :meeting => { :only => [:title, :description] } }
     else
       render json: @interval.errors, status: :unprocessable_entity
     end
