@@ -6,12 +6,12 @@ class MeetingsController < ApplicationController
   def index
     @meetings = @user.meetings
 
-    render json: @meetings
+    render json: @meetings, :include => :intervals
   end
 
   # GET users/1/meetings/1
   def show
-    render json: @meeting
+    render json: @meeting, :include => :intervals
   end
 
   # POST users/1/meetings
@@ -19,7 +19,10 @@ class MeetingsController < ApplicationController
     @meeting = @user.meetings.build(meeting_params)
 
     if @meeting.save
-      render json: @meeting, status: :created, location: user_meeting_url(@user, @meeting)
+      render json: @meeting,
+             include: :intervals,
+             status: :created,
+             location: user_meeting_url(@user, @meeting)
     else
       render json: @meeting.errors, status: :unprocessable_entity
     end
@@ -28,7 +31,7 @@ class MeetingsController < ApplicationController
   # PATCH/PUT users/1/meetings/1
   def update
     if @meeting.update(meeting_params)
-      render json: @meeting
+      render json: @meeting, :include => :intervals
     else
       render json: @meeting.errors, status: :unprocessable_entity
     end
