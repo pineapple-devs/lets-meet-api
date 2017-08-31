@@ -12,7 +12,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create meeting" do
     assert_difference('Meeting.count') do
-      post user_meetings_url(@meeting.user_id), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
+      post user_meetings_url(@meeting.user_id), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id }, intervals: [{ start_time: Time.now, end_time: Time.now + 2.hours}] }, as: :json
     end
 
     assert_response 201
