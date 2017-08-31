@@ -16,9 +16,11 @@ class MeetingsController < ApplicationController
 
   # POST users/1/meetings
   def create
-    @meeting = @user.meetings.build(meeting_params)
+    @meeting = @user.meetings.create(meeting_params)
 
-    if @meeting.save
+    create_intervals if @meeting
+
+    if @meeting
       render json: @meeting,
              include: :intervals,
              status: :created,
@@ -49,6 +51,15 @@ class MeetingsController < ApplicationController
 
     def set_meeting
       @meeting = @user.meetings.find(params[:id])
+    end
+
+    def create_intervals
+      params[:intervals].each do |interval|
+        @meeting.intervals.create(start_time: params[:start_time],
+                                  end_time: params[:end_time],
+                                  user: @user,
+                                  meeting: @meeting)
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
