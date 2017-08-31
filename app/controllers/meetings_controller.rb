@@ -55,8 +55,8 @@ class MeetingsController < ApplicationController
 
     def create_intervals
       params[:intervals].each do |interval|
-        @meeting.intervals.create(start_time: params[:start_time],
-                                  end_time: params[:end_time],
+        @meeting.intervals.create(start_time: interval[:start_time],
+                                  end_time: interval[:end_time],
                                   user: @user,
                                   meeting: @meeting)
       end
