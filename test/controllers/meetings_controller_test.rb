@@ -10,9 +10,60 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create meeting" do
-    assert_difference('Meeting.count') do
-      post user_meetings_url(@meeting.user_id), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id }, intervals: [{ start_time: Time.now, end_time: Time.now + 2.hours}] }, as: :json
+  test "should create meeting, interval and invitation" do
+    assert_difference(['Meeting.count',
+                       'Interval.count',
+                       'Invitation.count']) do
+      post user_meetings_url(@meeting.user_id),
+           params: {
+             meeting: {
+               description: @meeting.description,
+               title: @meeting.title,
+               user_id: @meeting.user_id },
+             intervals: [
+               { start_time: Time.now,
+                 end_time: Time.now + 2.hours }
+             ],
+             invitations: [
+               { email: "defunkt@github.com" }
+             ]
+           }, as: :json
+    end
+
+    assert_response 201
+  end
+
+  test "should create meeting and interval" do
+    assert_difference(['Meeting.count',
+                       'Interval.count']) do
+      post user_meetings_url(@meeting.user_id),
+           params: {
+             meeting: {
+               description: @meeting.description,
+               title: @meeting.title,
+               user_id: @meeting.user_id },
+             intervals: [
+               { start_time: Time.now,
+                 end_time: Time.now + 2.hours }
+             ],
+             invitations: [
+               { email: "defunkt@github.com" }
+             ]
+           }, as: :json
+    end
+
+    assert_difference('Invitation.count', 0) do
+      post user_meetings_url(@meeting.user_id),
+           params: {
+             meeting: {
+               description: @meeting.description,
+               title: @meeting.title,
+               user_id: @meeting.user_id },
+             intervals: [
+               { start_time: Time.now,
+                 end_time: Time.now + 2.hours }
+             ]
+           }, as: :json
     end
 
     assert_response 201
