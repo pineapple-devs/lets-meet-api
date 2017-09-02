@@ -19,6 +19,7 @@ class MeetingsController < ApplicationController
     @meeting = @user.meetings.create(meeting_params)
 
     create_intervals if @meeting
+    create_invitations if params[:invitations]
 
     if @meeting
       render json: @meeting,
@@ -59,6 +60,12 @@ class MeetingsController < ApplicationController
                                   end_time: interval[:end_time],
                                   user: @user,
                                   meeting: @meeting)
+      end
+    end
+
+    def create_invitations
+      params[:invitations].each do |invitation|
+        @meeting.invitations.create(:email => invitation[:email])
       end
     end
 
