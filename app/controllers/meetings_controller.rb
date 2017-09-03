@@ -65,7 +65,8 @@ class MeetingsController < ApplicationController
 
     def create_invitations
       params[:invitations].each do |invitation|
-        @meeting.invitations.create(:email => invitation[:email])
+        invite = @meeting.invitations.create(:email => invitation[:email])
+        InvitationMailer.invitation_mail(invite).deliver_later
       end
     end
 
