@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class MeetingsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @meeting = meetings(:one)
   end
@@ -45,9 +47,6 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
              intervals: [
                { start_time: Time.now,
                  end_time: Time.now + 2.hours }
-             ],
-             invitations: [
-               { email: "defunkt@github.com" }
              ]
            }, as: :json
     end
@@ -67,6 +66,25 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
+  end
+
+  test "should send invitation email" do
+    assert_enqueued_jobs 1 do
+      post user_meetings_url(@meeting.user_id),
+           params: {
+             meeting: {
+               description: @meeting.description,
+               title: @meeting.title,
+               user_id: @meeting.user_id },
+             intervals: [
+               { start_time: Time.now,
+                 end_time: Time.now + 2.hours }
+             ],
+             invitations: [
+               { email: "defunkt@github.com" }
+             ]
+           }, as: :json
+    end
   end
 
   test "should show meeting" do
