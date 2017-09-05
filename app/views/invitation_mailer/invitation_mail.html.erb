@@ -4,16 +4,25 @@ Hi there! <br>
 
 <%= @user.name %> has invited you to a meeting! <br>
 
+<p>
+  Meeting name: <%= @meeting.title %> <br>
+  Meeting description: <%= @meeting.description %>
+</p>
+
+<p>
+  Meeting starts at: <%= @intervals.first.start_time %> <br>
+  Meeting ends at: <%= @intervals.first.end_time %>
+</p>
+
+<% if @meeting.location? %>
+  <p>
+    You are supposed to meet at <%= @meeting.location %>.
+  </p>
+<% end %>
+
+<button>Accept :)</button> or <button>Decline :(</button> <br>
+
 <br>
 
-Meeting name: <%= @meeting.title %> <br>
-Meeting description: <%= @meeting.description %> <br>
-
-<br>
-
-Do you: <br>
-Accept :) or Decline :( <br>
-
-<br>
-
+Sincerely,
 LetsMeet app
