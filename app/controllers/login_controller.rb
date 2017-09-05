@@ -4,7 +4,9 @@ class LoginController < ApplicationController
   # GET login
   def login
     if @user && @user.password == params[:password]
-      render json: @user.id, status: 200
+      @app_credentials = { googlePlacesApiKey: ENV["GOOGLE_PLACES_API_WEB_SERVICE_KEY"] }
+      render json: { userId: @user.id,
+                     appCredentials: @app_credentials }, status: 200
     else
       render json: "Wrong email and password combination", status: 404
     end
