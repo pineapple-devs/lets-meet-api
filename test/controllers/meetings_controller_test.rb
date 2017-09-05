@@ -21,7 +21,8 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
              meeting: {
                description: @meeting.description,
                title: @meeting.title,
-               user_id: @meeting.user_id },
+               user_id: @meeting.user_id,
+               location: @meeting.location },
              intervals: [
                { start_time: Time.now,
                  end_time: Time.now + 2.hours }
@@ -43,7 +44,8 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
              meeting: {
                description: @meeting.description,
                title: @meeting.title,
-               user_id: @meeting.user_id },
+               user_id: @meeting.user_id,
+               location: @meeting.location },
              intervals: [
                { start_time: Time.now,
                  end_time: Time.now + 2.hours }
@@ -57,7 +59,8 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
              meeting: {
                description: @meeting.description,
                title: @meeting.title,
-               user_id: @meeting.user_id },
+               user_id: @meeting.user_id,
+               location: @meeting.location },
              intervals: [
                { start_time: Time.now,
                  end_time: Time.now + 2.hours }
@@ -75,7 +78,8 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
              meeting: {
                description: @meeting.description,
                title: @meeting.title,
-               user_id: @meeting.user_id },
+               user_id: @meeting.user_id,
+               location: @meeting.location },
              intervals: [
                { start_time: Time.now,
                  end_time: Time.now + 2.hours }
