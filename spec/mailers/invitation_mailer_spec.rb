@@ -6,6 +6,8 @@ RSpec.describe InvitationMailer, type: :mailer do
       @user = User.create(:name => "defunkt")
       @meeting = @user.meetings.create(:title => "GitHub Universe",
                                        :description => "Where we show off GitHub")
+      @meeting.intervals.create(:start_time => Time.now,
+                                :end_time => Time.now + 2.hours)
       @invitation = @meeting.invitations.create(:email => "everyone@github.com")
 
       @mail = described_class.invitation_mail(@invitation)
