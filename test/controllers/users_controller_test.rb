@@ -35,4 +35,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test "should return invitation user created" do
+    get user_invitations_url(@user), as: :json
+    assert_response :success
+  end
 end
