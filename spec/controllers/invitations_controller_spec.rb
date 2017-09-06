@@ -35,7 +35,8 @@ RSpec.describe InvitationsController, type: :controller do
 
     it "returns http success" do
       get :update, :params => {
-        :user_id => @user.id, :meeting_id => @meeting.id, :id => @invitation.id
+        :user_id => @user.id, :meeting_id => @meeting.id, :id => @invitation.id,
+        :invitation => { :email => "defunkt@github.com", :accepted => true }
       }
       expect(response).to have_http_status(:success)
     end

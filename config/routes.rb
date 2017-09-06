@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'login', :to => 'login#login'
 
-  resources :users do
+  resources :users, :except => :index do
     get :invitations, :controller => :users, :action => :invitations
 
     resources :meetings do
