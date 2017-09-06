@@ -38,6 +38,16 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  # GET /users/1/invitations
+  #
+  # Returns invitations created by user.
+  def invitations
+    user = User.find(params[:user_id])
+    @invitations = Invitation.created_by_user(user)
+
+    render json: @invitations
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
