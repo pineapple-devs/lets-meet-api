@@ -1,13 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /users
-  def index
-    @users = User.all
-
-    render json: @users
-  end
-
   # GET /users/1
   def show
     render json: @user
@@ -36,6 +29,16 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
+  end
+
+  # GET /users/1/invitations
+  #
+  # Returns invitations created by user.
+  def invitations
+    user = User.find(params[:user_id])
+    @invitations = Invitation.created_by_user(user)
+
+    render json: @invitations
   end
 
   private
