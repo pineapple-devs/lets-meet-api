@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   get 'login', :to => 'login#login'
 
   resources :users do
+    get :invitations, :controller => :users, :action => :invitations
+
     resources :meetings do
-      resources :intervals
+      resources :invitations, :only => [:index, :show, :update]
+      resources :intervals, :only => [:show, :create]
     end
   end
 end
