@@ -32,7 +32,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return invitation user created" do
-    get user_invitations_url(@user), as: :json
+    get user_sent_invitations_url(@user), as: :json
+    assert_response :success
+  end
+
+  test "should return invitation user received" do
+    get user_received_invitations_url(@user), as: :json
     assert_response :success
   end
 end
