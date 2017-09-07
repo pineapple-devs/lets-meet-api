@@ -50,6 +50,10 @@ class MeetingsController < ApplicationController
       @user = User.find(params[:user_id])
     end
 
+    def set_user_by_email(email)
+      User.find_by_email(email)
+    end
+
     def set_meeting
       @meeting = @user.meetings.find(params[:id])
     end
@@ -65,7 +69,10 @@ class MeetingsController < ApplicationController
 
     def create_invitations
       params[:invitations].each do |invitation|
-        invite = @meeting.invitations.create(:email => invitation[:email])
+        invite = @meeting.invitations.create(
+          :email => invitation[:email],
+          :user => set_user_by_email(invitation[:email])
+        )
         InvitationMailer.invitation_mail(invite).deliver_later
       end
     end
