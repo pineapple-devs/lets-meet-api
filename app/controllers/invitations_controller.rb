@@ -7,15 +7,15 @@ class InvitationsController < ApplicationController
     @invitations = @meeting.invitations
 
     render json: @invitations
-  end
+ end
 
   def show
-    render json: @invitation
+    render json: @invitations
   end
 
   def update
     if @invitation.update(invitation_params)
-      render json: @invitation
+      render json: @invitations
     else
       render json: @invitation.errors, status: :unprocessable_entity
     end
