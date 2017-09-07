@@ -34,11 +34,20 @@ class UsersController < ApplicationController
   # GET /users/1/invitations
   #
   # Returns invitations created by user.
-  def invitations
+  def sent_invitations
     user = User.find(params[:user_id])
     @invitations = Invitation.created_by_user(user)
 
-    render json: @invitations
+    render json: @invitations, :include => { :user => { :except => [:password] },
+                                             :meeting => {} }
+  end
+
+  def received_invitations
+    user = User.find(params[:user_id])
+    @invitations = user.invitations
+
+    render json: @invitations, :include => { :user => { :except => [:password] },
+                                             :meeting => {} }
   end
 
   private
