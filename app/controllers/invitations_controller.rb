@@ -10,12 +10,12 @@ class InvitationsController < ApplicationController
  end
 
   def show
-    render json: @invitations
+    render json: @invitation
   end
 
   def update
     if @invitation.update(invitation_params)
-      render json: @invitations
+      render json: @invitation
     else
       render json: @invitation.errors, status: :unprocessable_entity
     end
