@@ -12,12 +12,14 @@ class LoginControllerTest < ActionDispatch::IntegrationTest
 
   test "should return proper response body" do
     ENV["GOOGLE_PLACES_API_WEB_SERVICE_KEY"] = "google_api_key"
+    ENV["SENDER_ID"] = "123124"
 
     get login_url(username: @user.name, password: @user.password), as: :json
 
     body = JSON.parse(response.body)
     assert_equal body, { "userId" => @user.id,
-                         "appCredentials" => { "googlePlacesApiKey" => "google_api_key" }}
+                         "appCredentials" => { "googlePlacesApiKey" => "google_api_key",
+                                               "senderId" => "123124"} }
   end
 
   test "should get login with failure" do
