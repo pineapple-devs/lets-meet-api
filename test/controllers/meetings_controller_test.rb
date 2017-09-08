@@ -4,6 +4,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
 
   setup do
+    @user = users(:one)
     @meeting = meetings(:one)
   end
 
@@ -28,7 +29,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
                  end_time: Time.now + 2.hours }
              ],
              invitations: [
-               { email: "defunkt@github.com" }
+               { email: @user.email }
              ]
            }, as: :json
     end

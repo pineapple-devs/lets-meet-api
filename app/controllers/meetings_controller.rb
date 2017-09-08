@@ -69,20 +69,19 @@ class MeetingsController < ApplicationController
 
     def create_invitations
       params[:invitations].each do |invitation|
+        invited_user = set_user_by_email(invitation[:email])
         invite = @meeting.invitations.create(
           :email => invitation[:email],
-          :user => set_user_by_email(invitation[:email])
+          :user => invited_user
         )
+
         InvitationMailer.invitation_mail(invite).deliver_later
+        ::InvitationNotification.send(invite, invited_user) if invited_user.present?
       end
     end
 
     # Only allow a trusted parameter "white list" through.
     def meeting_params
       params.require(:meeting).permit(:title, :description, :user_id, :location)
-    end
-
-    def gcm
-      @gcm ||= GCM.new(ENV["GCM_API_KEY"])
     end
 end
