@@ -40,4 +40,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get user_received_invitations_url(@user), as: :json
     assert_response :success
   end
+
+  test "should return head ok" do
+    post user_register_device_url(@user), params: { token: "aslkf", os: "android" }, as: :json
+    assert_response :success
+  end
 end

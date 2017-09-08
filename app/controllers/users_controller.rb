@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
-  # GET /users/1/invitations
+  # GET /users/1/sent_invitations
   #
   # Returns invitations created by user.
   def sent_invitations
@@ -41,11 +41,25 @@ class UsersController < ApplicationController
     render json: @invitations
   end
 
+  # GET /users/1/received_invitations
+  #
+  # Returns invitations received by user.
   def received_invitations
     user = User.find(params[:user_id])
     @invitations = user.invitations
 
     render json: @invitations
+  end
+
+  # POST /users/1/register_device
+  #
+  # Registers user's device with token and OS she is using
+  def register_device
+    user = User.find(params[:user_id])
+
+    user.devices.find_or_create_by(token: params[:token], os: params[:os])
+
+    head :ok
   end
 
   private

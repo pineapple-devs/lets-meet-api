@@ -81,4 +81,8 @@ class MeetingsController < ApplicationController
     def meeting_params
       params.require(:meeting).permit(:title, :description, :user_id, :location)
     end
+
+    def gcm
+      @gcm ||= GCM.new(ENV["GCM_API_KEY"])
+    end
 end
