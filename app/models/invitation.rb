@@ -9,6 +9,7 @@ class Invitation < ApplicationRecord
   def as_json(options = {})
     super(options.merge(
       :include => {
+        :user => { :except => [:password] },
         :meeting => {
           :include => {
             :user => { :except => [:password] }
