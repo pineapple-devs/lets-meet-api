@@ -15,6 +15,8 @@ class InvitationsController < ApplicationController
 
   def update
     if @invitation.update(invitation_params)
+      InvitationNotification.send_invitation_changed(@invitation, @invitation.user)
+
       render json: @invitation
     else
       render json: @invitation.errors, status: :unprocessable_entity
