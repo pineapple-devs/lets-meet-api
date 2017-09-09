@@ -76,7 +76,7 @@ class MeetingsController < ApplicationController
         )
 
         InvitationMailer.invitation_mail(invite).deliver_later
-        ::InvitationNotification.send(invite, invited_user) if invited_user.present?
+        InvitationNotification.send_invitation(invite, invited_user) if invited_user.present?
       end
     end
 
