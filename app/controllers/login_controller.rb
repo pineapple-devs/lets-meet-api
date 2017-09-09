@@ -7,6 +7,7 @@ class LoginController < ApplicationController
       @app_credentials = { googlePlacesApiKey: ENV["GOOGLE_PLACES_API_WEB_SERVICE_KEY"],
                            senderId: ENV["SENDER_ID"] }
       render json: { userId: @user.id,
+                     user: @user,
                      appCredentials: @app_credentials }, status: 200
     else
       render json: "Wrong email and password combination", status: 404

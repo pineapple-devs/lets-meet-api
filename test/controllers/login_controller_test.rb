@@ -18,6 +18,7 @@ class LoginControllerTest < ActionDispatch::IntegrationTest
 
     body = JSON.parse(response.body)
     assert_equal body, { "userId" => @user.id,
+                         "user" => @user.as_json,
                          "appCredentials" => { "googlePlacesApiKey" => "google_api_key",
                                                "senderId" => "123124"} }
   end
