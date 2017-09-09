@@ -75,9 +75,19 @@ class MeetingsController < ApplicationController
           :user => invited_user
         )
 
-        InvitationMailer.invitation_mail(invite).deliver_later
-        InvitationNotification.send_invitation(invite, invited_user) if invited_user.present?
+        InvitationMailer.invitation_mail(invite).deliver_later if send_email?(invited_user)
+        InvitationNotification.send_invitation(invite, invited_user) if send_push?(invited_user)
       end
+    end
+
+    def send_email?(invited_user)
+      return true unless invited_user.present?
+
+      invited_user.email_opt_in
+    end
+
+    def send_push?(invited_user)
+      invited_user.present? && invited_user.push_opt_in
     end
 
     # Only allow a trusted parameter "white list" through.

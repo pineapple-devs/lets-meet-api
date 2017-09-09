@@ -15,7 +15,9 @@ class InvitationsController < ApplicationController
 
   def update
     if @invitation.update(invitation_params)
-      InvitationNotification.send_invitation_changed(@invitation, @invitation.user)
+      if send_push?
+        InvitationNotification.send_invitation_changed(@invitation, @invitation.user)
+      end
 
       render json: @invitation
     else
@@ -35,6 +37,10 @@ class InvitationsController < ApplicationController
 
     def set_invitation
       @invitation = @meeting.invitations.find(params[:id])
+    end
+
+    def send_push?
+      @user.push_opt_in
     end
 
     def invitation_params
