@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe InvitationsController, type: :controller do
   before do
     @user = User.create
+    @invited_user = User.create
     @meeting = Meeting.create(:user => @user)
   end
 
@@ -17,7 +18,8 @@ RSpec.describe InvitationsController, type: :controller do
 
   describe "GET #show" do
     before do
-      @invitation = Invitation.create(:meeting => @meeting)
+      @invitation = Invitation.create(:meeting => @meeting,
+                                      :user => @invited_user)
     end
 
     it "returns http success" do
