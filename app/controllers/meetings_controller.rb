@@ -34,6 +34,8 @@ class MeetingsController < ApplicationController
   # PATCH/PUT users/1/meetings/1
   def update
     if @meeting.update(meeting_params)
+      update_intervals
+
       render json: @meeting, :include => :intervals
     else
       render json: @meeting.errors, status: :unprocessable_entity
@@ -88,6 +90,12 @@ class MeetingsController < ApplicationController
 
     def send_push?(invited_user)
       invited_user.present? && invited_user.push_opt_in
+    end
+
+    def update_intervals
+      @meeting.intervals.first.destroy
+
+      create_intervals
     end
 
     # Only allow a trusted parameter "white list" through.
