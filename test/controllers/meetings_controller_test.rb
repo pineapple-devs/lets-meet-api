@@ -98,7 +98,14 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update meeting" do
-    patch user_meeting_url(@meeting.user_id, @meeting), params: { meeting: { description: @meeting.description, title: @meeting.title, user_id: @meeting.user_id } }, as: :json
+    patch user_meeting_url(@meeting.user_id, @meeting),
+      params: {
+      meeting: {
+        description: @meeting.description,
+        title: @meeting.title,
+        user_id: @meeting.user_id },
+      intervals: [ { start_time: Time.now,
+                     end_time: Time.now + 2.hours } ] }, as: :json
     assert_response 200
   end
 
