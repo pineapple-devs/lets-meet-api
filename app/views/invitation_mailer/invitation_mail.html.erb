@@ -23,7 +23,22 @@
 <% end %>
 
 <p>
-  <button>Accept :)</button> or <button>Decline :(</button>
+<%= link_to "Accept :)", user_meeting_invitation_answer_email_url(
+    @user.id,
+    @meeting.id,
+    @invitation.id,
+    host: "https://lets-meet-api.herokuapp.com",
+    invitation: { accepted: true }
+  ),
+  method: :post %> or
+<%= link_to "Decline :(", user_meeting_invitation_answer_email_url(
+    @user.id,
+    @meeting.id,
+    @invitation.id,
+    host: "https://lets-meet-api.herokuapp.com",
+    invitation: { accepted: false }
+  ),
+  method: :post %>
 </p>
 
 Sincerely,

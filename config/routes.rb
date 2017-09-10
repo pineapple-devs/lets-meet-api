@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     post :register_device, :controller => :users, :action => :register_device
 
     resources :meetings do
-      resources :invitations, :only => [:index, :show, :update]
+      resources :invitations, :only => [:index, :show, :update] do
+        get :answer_email
+      end
       resources :intervals, :only => [:show, :create]
     end
   end

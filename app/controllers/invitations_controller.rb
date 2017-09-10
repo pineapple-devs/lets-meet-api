@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   before_action :set_user
   before_action :set_meeting
-  before_action :set_invitation, :only => [:show, :update]
+  before_action :set_invitation, :only => [:show, :update, :answer_email]
 
   def index
     @invitations = @meeting.invitations
@@ -22,6 +22,18 @@ class InvitationsController < ApplicationController
       render json: @invitation
     else
       render json: @invitation.errors, status: :unprocessable_entity
+    end
+  end
+
+  def answer_email
+    if @invitation.update(invitation_params)
+      if send_push?
+        InvitationNotification.send_invitation_changed(@invitation, @invitation.user)
+      end
+
+      render text: "Successfully updated your invitation"
+    else
+      render text: @invitation.errors, status: :unprocessable_entity
     end
   end
 
