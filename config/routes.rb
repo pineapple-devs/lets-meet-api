@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     resources :meetings do
       resources :invitations, :only => [:index, :show, :update] do
-        get :answer_email
+        get :answer_email, :controller => :invitations, :action => :answer_email
       end
       resources :intervals, :only => [:show, :create]
     end

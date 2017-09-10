@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   before_action :set_user
   before_action :set_meeting
-  before_action :set_invitation, :only => [:show, :update, :answer_email]
+  before_action :set_invitation, :only => [:show, :update]
 
   def index
     @invitations = @meeting.invitations
@@ -26,6 +26,8 @@ class InvitationsController < ApplicationController
   end
 
   def answer_email
+    @invitation = @meeting.invitations.find(params[:invitation_id])
+
     if @invitation.update(invitation_params)
       if send_push?
         InvitationNotification.send_invitation_changed(@invitation, @invitation.user)
