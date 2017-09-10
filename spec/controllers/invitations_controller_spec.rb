@@ -44,4 +44,18 @@ RSpec.describe InvitationsController, type: :controller do
     end
   end
 
+  describe "GET #answer_email" do
+    before do
+      @invitation = Invitation.create(:meeting => @meeting)
+    end
+
+    it "returns http success" do
+      get :answer_email, :params => {
+        :user_id => @user.id, :meeting_id => @meeting.id, :invitation_id => @invitation.id,
+        :invitation => { :email => "defunkt@github.com", :accepted => true }
+      }
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end
