@@ -128,6 +128,7 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    scout_apm (2.1.31)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -159,6 +160,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.2)
   rspec-rails (~> 3.6)
+  scout_apm
   shoulda-matchers!
   spring
   spring-watcher-listen (~> 2.0.0)
